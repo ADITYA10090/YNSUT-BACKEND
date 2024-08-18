@@ -172,7 +172,7 @@ app.post('/sendcaptcha',(req,res)=>{
     await delay(500)
 
     await frame2s[n].select('#year','2023-24')
-    await frame2s[n].select('#sem','4')
+    await frame2s[n].select('#sem','5')
     await delay(500)
     await pages[n].mouse.click(675,153)
 
