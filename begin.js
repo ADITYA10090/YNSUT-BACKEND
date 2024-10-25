@@ -49,7 +49,7 @@ async function getAttendance() {
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
           : puppeteer.executablePath(),
-      headless: true,
+      headless: false,
       slowMo: num,
     });
   } catch (error) {
