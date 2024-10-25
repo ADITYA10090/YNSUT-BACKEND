@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tesseract.js Numbers Recognition</title>
+    <style>
+      body {
+        background-image: "./ ";
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.3.0/dist/tesseract.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <a href="https://www.linkedin.com/in/ahmad-manzar-rizvi-2b7234257/"
+        ><img src="./nflxlogo.jpg" width="200" style="margin: 30px"
+      /></a>
+      <a href="https://leetcode.com/manzarahmad77/"
+        ><img src="imgtes.jpg" width="200" style="margin: 30px"
+      /></a>
+    </div>
+
+    <script>
+      document
+        .getElementById("recognizeButton")
+        .addEventListener("click", function () {
+          const imageUrl = document.getElementById("imageUrl").value;
+
+          if (imageUrl.trim() === "") {
+            alert("Please enter a valid URL");
+            return;
+          }
+
+          Tesseract.recognize(
+            imageUrl,
+            "eng", // language
+            { tessedit_char_whitelist: "0123456789" } // specify the whitelist of characters
+          )
+            .then(function (result) {
+              document.getElementById("output").innerText = result.text;
+            })
+            .catch(function (error) {
+              console.error("Error:", error);
+              alert("Error occurred while recognizing the image");
+            });
+        });
+    </script>
+  </body>
+</html>

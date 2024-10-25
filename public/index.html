@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.3.0/dist/tesseract.min.js"></script>
+  </head>
+
+  <body>
+    <section class="side-bar">
+      <div id="title">
+        <h1>NsutY</h1>
+      </div>
+      <div class="profile-box">
+        <img src="profile.jpg" class="profile-img" />
+        <h3 id="name">Person</h3>
+      </div>
+      <div class="options">
+        <ul type="none">
+          <li>Profile</li>
+          <li>Dashboard</li>
+          <li>To-Do</li>
+          <li>Courses</li>
+        </ul>
+      </div>
+      <div class="Login">
+        <button class="btn">Log Out</button>
+      </div>
+    </section>
+
+    <section class="att-box">
+      <h1>Attendance Report</h1>
+      <div class="attendance-bar">
+        <div class="subject">
+          <label for="file">Sub1</label>
+          <div id="OS">Fetching...%</div>
+          <progress id="file" value="85" max="100"></progress>
+        </div>
+        <div class="subject">
+          <label for="file">Sub2</label>
+          <div id="ADC">Fetching...%</div>
+          <progress id="file" value="88" max="100"></progress>
+        </div>
+        <div class="subject">
+          <label for="file">Sub3</label>
+          <div id="CN">Fetching...%</div>
+          <progress id="file" value="78" max="100"></progress>
+        </div>
+        <div class="subject">
+          <label for="file">Sub4</label>
+          <div id="DAA">Fetching...%</div>
+          <progress id="file" value="90" max="100"></progress>
+        </div>
+        <div class="subject">
+          <label for="file">Sub5 </label>
+          <div id="SE">Fetching...%</div>
+          <progress id="file" value="87" max="100"></progress>
+        </div>
+        <div class="subject">
+          <label for="file">Sub6</label>
+          <div id="Yoga">Fetching...%</div>
+          <progress id="file" value="65" max="100"></progress>
+        </div>
+      </div>
+      <img src="" alt="Image will be shown here" id="imgtagz" style="width: 120px; height:50px;margin-left: 50px; margin-right: 50px" />
+
+      <button
+        id="btn"
+        style="margin-left: 50px; margin-right: 50px; width: 120px"
+      >
+        Get Image
+      </button>
+      <!-- <form action="/sendcaptcha" method="post"> -->
+      <input type="text" id="OTPINPUT" oninput="handleInputChange()" />
+      <!-- <input type="text" id="uniqueID" oninput="handleIDChange()" /> -->
+      <button
+        id="btn2"
+        style="margin-left: 50px; margin-right: 50px; width: 120px"
+      >
+        Get Attendance
+      </button>
+      <button id="try">Recognize</button>
+      <!-- </form> -->
+    </section>
+  </body>
+  <script src="index.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+    integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</html>
