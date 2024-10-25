@@ -2,7 +2,9 @@ import express, { response } from "express";
 import puppeteer from "puppeteer";
 import cors from "cors";
 import fs from "fs";
-require("dotenv").config(); 
+// require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +39,7 @@ async function getAttendance() {
   try {
     let num = randomNumber(10, 100);
     browser = await puppeteer.launch({
-      args:[
+      args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
         "--single-process",
@@ -47,7 +49,7 @@ async function getAttendance() {
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
           : puppeteer.executablePath(),
-      headless: true,
+      headless: false,
       slowMo: num,
     });
   } catch (error) {
