@@ -37,7 +37,7 @@ async function getAttendance(){
   try {
       let num= randomNumber(10,100)
       browser=await puppeteer.launch({
-      headless:false,
+      headless:true,
       slowMo:num
        });
   } catch (error) {
