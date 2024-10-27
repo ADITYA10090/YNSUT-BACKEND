@@ -1,9 +1,10 @@
 import express, { response } from "express";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core"
+import Chromium from "@sparticuz/chromium";
 import cors from "cors";
 import fs from "fs";
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -39,8 +40,13 @@ async function getAttendance() {
   try {
     let num = randomNumber(10, 100);
     browser = await puppeteer.launch({
-      headless:true,
-      slownum:true,
+      args: Chromium.args,
+      defaultViewport: Chromium.defaultViewport,
+      executablePath: await Chromium.executablePath(),
+      headless: Chromium.headless,
+      ignoreHTTPSErrors: true,
+      // headless:true,
+      // slownum:true,
     });
   } catch (error) {
     console.log(error);
