@@ -2,7 +2,6 @@ import express, { response } from "express";
 import puppeteer from "puppeteer";
 import cors from "cors";
 import fs from "fs";
-// require("dotenv").config();
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -34,6 +33,10 @@ const delay = (time) => {
   });
 };
 
+// if (process.env.AWS_LAMBDA_FUNCTION_VERSION){
+//   chrome=require("chrome-aws-lambda");
+//   puppeteer=require("puppeteer-core");
+// }
 let browser;
 async function getAttendance() {
   try {
