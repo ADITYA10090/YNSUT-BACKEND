@@ -46,7 +46,7 @@ async function getAttendance() {
       ],
       executablePath:
         process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          ? process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome'
           : puppeteer.executablePath(),
       headless:false,
       slownum:true,

@@ -42,7 +42,8 @@ USER pptruser
 
 # Set up the working directory for your app
 WORKDIR /usr/src/app
-
+RUN mkdir -p .cache/puppeteer
+COPY .puppeteerrc.cjs ./
 # Copy package files and install dependencies
 COPY package*.json ./ 
 RUN npm ci 
