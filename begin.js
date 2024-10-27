@@ -33,27 +33,14 @@ const delay = (time) => {
   });
 };
 
-// if (process.env.AWS_LAMBDA_FUNCTION_VERSION){
-//   chrome=require("chrome-aws-lambda");
-//   puppeteer=require("puppeteer-core");
-// }
+let options={};
 let browser;
 async function getAttendance() {
   try {
     let num = randomNumber(10, 100);
     browser = await puppeteer.launch({
-      args: [
-        "--disable-setuid-sandbox",
-        "--no-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
-      headless: false,
-      slowMo: num,
+      headless:true,
+      slownum:true,
     });
   } catch (error) {
     console.log(error);
@@ -106,12 +93,16 @@ app.post("/sendcaptcha", (req, res) => {
     console.log(otp);
     await frame.type("#cap", otp);
     await frame.click("#login");
-    await page.waitForSelector('frame[name="banner"]');
-
+    // await page.waitForFrame('banner');
+    const frameHandleH=await page.waitForFrame(async frame =>{
+      return frame.name() ==='banner';
+    })
+    // await page.waitForSelector('frame[name="banner"]');
+  
     const frameHandle = await page.$('frame[name="banner"]');
 
     const Currframe = await frameHandle.contentFrame();
-
+    
     await Currframe.waitForSelector(
       "body > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(2) > td:nth-child(1) > table > tbody > tr > td:nth-child(5) > a",
       { visible: true }
@@ -120,22 +111,26 @@ app.post("/sendcaptcha", (req, res) => {
     await Currframe.click(
       "body > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(2) > td:nth-child(1) > table > tbody > tr > td:nth-child(5) > a"
     );
+    const frameHandleHa=await page.waitForFrame(async frame =>{
+      return frame.name() ==='top';
+    })
     const NextframeHandle = await page.$('frame[name="top"]');
     const NextCurrframe = await NextframeHandle.contentFrame();
+    await NextCurrframe.waitForSelector("xpath=/html/body/div/ul/ul/li/div",{visible:true});
     await NextCurrframe.click("xpath=/html/body/div/ul/ul/li/div");
-    await NextCurrframe.waitForSelector("xpath=/html/body/div/ul/ul/li/div");
+    await NextCurrframe.waitForSelector("xpath=/html/body/div/ul/ul/li/ul/li[1]/a/span",{visible:true});
     await NextCurrframe.click("xpath=/html/body/div/ul/ul/li/ul/li[1]/a/span");
-    // await page.waitForFrame('data');
-    // const dataFrameHandle = await page.waitForFrame(async frame=>{
-    //     return frame.name() ==='data';
-    // })
+    const frameHandleHanj=await page.waitForFrame(async frames =>{
+      return frames.name() ==="data";
+    })
     const dataFrameHandle = await page.$('frame[name="data"]');
     console.log("F Point");
     const dataFrame = await dataFrameHandle.contentFrame();
+    await dataFrame.waitForSelector("#year",{visible:true});
     await dataFrame.select("#year", "2024-25");
     await dataFrame.select("#sem", "5");
     await dataFrame.click('input[name="submit"]');
-
+    
     await delay(500);
 
     const thTexts = await dataFrame.evaluate(() => {
