@@ -3,7 +3,7 @@ FROM node:20@sha256:fffa89e023a3351904c04284029105d9e2ac7020886d683775a298569591
 
 # Configure default locale (important for chrome-headless-shell).
 ENV LANG en_US.UTF-8
-ENV PUPPETEER_CACHE_DIR=/home/pptruser/.cache/puppeteer
+ENV PUPPETEER_CACHE_DIR=/usr/src/app/.cache/puppeteer
 
 # Install necessary fonts and dbus for character set support and Chrome dependencies
 RUN apt-get update \
@@ -14,6 +14,11 @@ RUN apt-get update \
 
 # Add pptruser to run Chrome as a non-privileged user
 RUN groupadd -r pptruser && useradd -u 10042 -rm -g pptruser -G audio,video pptruser
+
+USER root
+
+# Create the cache directory and set permissions
+RUN mkdir -p /usr/src/app/.cache/puppeteer && chown -R pptruser:pptruser /usr/src/app/.cache
 
 USER pptruser
 WORKDIR /home/pptruser
@@ -31,7 +36,6 @@ RUN npm install ./puppeteer-browsers-latest.tgz ./puppeteer-core-latest.tgz ./pu
 # Switch to root to install Puppeteer Chrome dependencies
 USER root
 RUN npx puppeteer browsers install chrome --install-deps
-RUN npx puppeteer browsers install chrome
 
 # Return to pptruser for security
 USER pptruser
