@@ -3,12 +3,13 @@ FROM node:20@sha256:fffa89e023a3351904c04284029105d9e2ac7020886d683775a298569591
 
 # Configure default locale (important for chrome-headless-shell).
 ENV LANG en_US.UTF-8
+ENV PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer
 
 # Install necessary fonts and dbus for character set support and Chrome dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros \
-    fonts-kacst fonts-freefont-ttf dbus dbus-x11 \
+       fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros \
+       fonts-kacst fonts-freefont-ttf dbus dbus-x11 \
     && rm -rf /var/lib/apt/lists/*
 
 # Add pptruser to run Chrome as a non-privileged user
@@ -38,8 +39,8 @@ USER pptruser
 WORKDIR /usr/src/app
 
 # Copy package files and install dependencies
-COPY package*.json ./
-RUN npm ci
+COPY package*.json ./ 
+RUN npm ci 
 
 # Copy the rest of the application code
 COPY . .

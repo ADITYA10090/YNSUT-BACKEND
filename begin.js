@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(express.static("./public"));
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 function waitForCondition() {
   return new Promise((resolve) => {
@@ -48,7 +48,7 @@ async function getAttendance() {
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
           : puppeteer.executablePath(),
-      headless:true,
+      headless:false,
       slownum:true,
     });
   } catch (error) {
@@ -103,9 +103,9 @@ app.post("/sendcaptcha", (req, res) => {
     await frame.type("#cap", otp);
     await frame.click("#login");
     // await page.waitForFrame('banner');
-    const frameHandleH = await page.waitForFrame(async (frame) => {
-      return frame.name() === "banner";
-    });
+    // const frameHandleH = await page.waitForFrame(async (frame) => {
+    //   return frame.name() === "banner";
+    // });
     // await page.waitForSelector('frame[name="banner"]');
 
     const frameHandle = await page.$('frame[name="banner"]');
@@ -120,9 +120,9 @@ app.post("/sendcaptcha", (req, res) => {
     await Currframe.click(
       "body > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(2) > td:nth-child(1) > table > tbody > tr > td:nth-child(5) > a"
     );
-    const frameHandleHa = await page.waitForFrame(async (frame) => {
-      return frame.name() === "top";
-    });
+    // const frameHandleHa = await page.waitForFrame(async (frame) => {
+    //   return frame.name() === "top";
+    // });
     const NextframeHandle = await page.$('frame[name="top"]');
     const NextCurrframe = await NextframeHandle.contentFrame();
     await NextCurrframe.waitForSelector("xpath=/html/body/div/ul/ul/li/div", {
@@ -134,9 +134,9 @@ app.post("/sendcaptcha", (req, res) => {
       { visible: true }
     );
     await NextCurrframe.click("xpath=/html/body/div/ul/ul/li/ul/li[1]/a/span");
-    const frameHandleHanj = await page.waitForFrame(async (frames) => {
-      return frames.name() === "data";
-    });
+    // const frameHandleHanj = await page.waitForFrame(async (frames) => {
+    //   return frames.name() === "data";
+    // });
     const dataFrameHandle = await page.$('frame[name="data"]');
     console.log("F Point");
     const dataFrame = await dataFrameHandle.contentFrame();
