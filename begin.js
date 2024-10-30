@@ -38,7 +38,7 @@ async function getAttendance() {
   try {
     let num = randomNumber(10, 100);
     browser = await puppeteer.launch({
-      args:[
+      args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
         "--single-process",
@@ -46,10 +46,10 @@ async function getAttendance() {
       ],
       executablePath:
         process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome'
+          ? process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome"
           : puppeteer.executablePath(),
-      headless:false,
-      slownum:true,
+      headless: false,
+      slownum: true,
     });
   } catch (error) {
     console.log(error);
@@ -99,7 +99,12 @@ app.get("/getcaptcha", (req, res) => {
 app.post("/sendcaptcha", (req, res) => {
   async function g() {
     const { otp } = await req.body;
+    let userId = "2022UIT3054";
+    let password = "wrchb~0";
+    // const [otp, userId, password] = d.split(" ");
     console.log(otp);
+    await frame.$eval("#uid", (el) => (el.value = "2022UIT3054"));
+    await frame.$eval("#pwd", (el) => (el.value = "wrchb~0"));
     await frame.type("#cap", otp);
     await frame.click("#login");
     // await page.waitForFrame('banner');
@@ -125,12 +130,19 @@ app.post("/sendcaptcha", (req, res) => {
     // });
     const NextframeHandle = await page.$('frame[name="top"]');
     const NextCurrframe = await NextframeHandle.contentFrame();
-    await NextCurrframe.waitForSelector("xpath=/html/body/div/ul/ul/li/div", {
+    // await NextCurrframe.waitForSelector("xpath=/html/body/div/ul/ul/li/div", {
+    //   visible: true,
+    // });
+    await NextCurrframe.waitForSelector("#tree > ul > li > div", {
       visible: true,
     });
     await NextCurrframe.click("xpath=/html/body/div/ul/ul/li/div");
+    // await NextCurrframe.waitForSelector(
+    //   "xpath=/html/body/div/ul/ul/li/ul/li[1]/a/span",
+    //   { visible: true }
+    // );
     await NextCurrframe.waitForSelector(
-      "xpath=/html/body/div/ul/ul/li/ul/li[1]/a/span",
+      "#tree > ul > li > ul > li:nth-child(1) > a > span",
       { visible: true }
     );
     await NextCurrframe.click("xpath=/html/body/div/ul/ul/li/ul/li[1]/a/span");

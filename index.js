@@ -19,12 +19,6 @@ btn?.addEventListener("click", async ()=>{
     }
 })
 
-// async function handleInputChange(){
-//         otp=document.getElementById("OTPINPUT").value;
-// }
-// async function handleIDChange(){
-//     uniqueIds[randomNumber(10,10000)]=document.getElementById("uniqueID").value;
-// }
 const btn2 = document.getElementById("btn2");
 btn2?.addEventListener("click",async ()=>{
     console.log("hello");
